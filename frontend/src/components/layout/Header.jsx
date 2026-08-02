@@ -1,0 +1,47 @@
+import { HiMagnifyingGlass, HiBell, HiBars3, HiChevronDown, HiArrowRightOnRectangle } from 'react-icons/hi2';
+import { useAuth } from '../../context/AuthContext';
+import './Header.css';
+
+export default function Header({ toggleSidebar }) {
+  const { user, logout } = useAuth();
+  
+  return (
+    <header className="header">
+      <div className="header-left">
+        <button className="header-mobile-toggle" onClick={toggleSidebar}>
+          <HiBars3 />
+        </button>
+        <div className="header-search">
+          <HiMagnifyingGlass className="header-search-icon" />
+          <input type="text" placeholder="Search anything..." />
+          <div className="header-search-shortcut">
+            <kbd>⌘</kbd> <kbd>K</kbd>
+          </div>
+        </div>
+      </div>
+      
+      <div className="header-right">
+        <button className="header-btn">
+          <HiBell />
+          <span className="header-btn-badge"></span>
+        </button>
+        
+        <button className="header-btn" onClick={logout} title="Logout" style={{ marginLeft: 8 }}>
+          <HiArrowRightOnRectangle />
+        </button>
+
+        <div className="header-user" style={{ marginLeft: 16 }}>
+          <div className="header-user-avatar" title={user?.email}>
+            {user?.email?.charAt(0).toUpperCase() || 'U'}
+          </div>
+          <div className="header-user-info">
+            <span className="header-user-name">Karthikeyan S</span>
+            <span className="header-user-role">Student</span>
+          </div>
+          <HiChevronDown style={{ color: 'var(--gray-400)', fontSize: 16 }} />
+        </div>
+      </div>
+    </header>
+  );
+}
+

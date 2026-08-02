@@ -1,0 +1,429 @@
+/* Achievements Section Styles */
+.ach-page {
+  animation: fadeInUp var(--transition-slow) ease-out both;
+}
+
+/* Stats Row */
+.ach-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .ach-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ach-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ach-stat-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ach-stat-card:not(:last-child) {
+  border-right: 1px solid var(--border-light);
+  padding-right: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .ach-stat-card:nth-child(2) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .ach-stat-card:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: var(--space-4);
+  }
+}
+
+.ach-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-xl);
+  flex-shrink: 0;
+}
+
+.ach-stat-icon.blue { background: #eff6ff; color: #2563eb; }
+.ach-stat-icon.green { background: #d1fae5; color: #059669; }
+.ach-stat-icon.purple { background: #f3e8ff; color: #7e22ce; }
+.ach-stat-icon.orange { background: #ffedd5; color: #ea580c; }
+
+.ach-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ach-stat-title {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.ach-stat-value {
+  font-size: var(--font-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+/* Toolbar & Filters */
+.ach-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.ach-search-box {
+  flex: 1;
+  min-width: 220px;
+  position: relative;
+}
+
+.ach-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: var(--font-md);
+}
+
+.ach-search-input {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.ach-search-input:focus {
+  border-color: var(--primary-500);
+}
+
+.ach-filter-select {
+  padding: 9px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.ach-view-toggle {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+
+.ach-toggle-btn {
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-md);
+  transition: all var(--transition-fast);
+}
+
+.ach-toggle-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* Two Column Main Layout Grid */
+.ach-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .ach-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Achievements List */
+.ach-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Achievement Card Row */
+.ach-card-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  gap: var(--space-5);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+}
+
+.ach-card-row:hover {
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.ach-type-badge-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.ach-type-badge-icon.award { background: #fef9c3; color: #ca8a04; }
+.ach-type-badge-icon.recognition { background: #f3e8ff; color: #9333ea; }
+.ach-type-badge-icon.milestone { background: #d1fae5; color: #059669; }
+.ach-type-badge-icon.community { background: #ffedd5; color: #ea580c; }
+.ach-type-badge-icon.other { background: #f1f5f9; color: #475569; }
+
+.ach-card-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ach-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ach-card-title {
+  font-size: var(--font-md);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ach-card-date {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ach-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-xs);
+  font-weight: 600;
+}
+
+.ach-type-label {
+  color: #2563eb;
+}
+
+.ach-type-label.award { color: #d97706; }
+.ach-type-label.recognition { color: #9333ea; }
+.ach-type-label.milestone { color: #059669; }
+.ach-type-label.community { color: #ea580c; }
+
+.ach-sub-divider {
+  color: var(--border-medium);
+}
+
+.ach-issuer-text {
+  color: var(--text-secondary);
+}
+
+.ach-desc {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.ach-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.ach-tag-pill {
+  font-size: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 3px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid #dbeafe;
+}
+
+.ach-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* Right Column Widgets Panel */
+.ach-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.ach-widget-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.ach-widget-title {
+  font-size: var(--font-xs);
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+}
+
+/* Widget Lists */
+.ach-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ach-widget-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+}
+
+.ach-widget-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.ach-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Recent Milestones Widget Items */
+.ach-milestone-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.ach-milestone-flag {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.ach-milestone-title {
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ach-milestone-desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Tip Box */
+.ach-tip-box {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.ach-tip-icon {
+  font-size: 20px;
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ach-tip-content h4 {
+  font-size: var(--font-xs);
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 2px;
+}
+
+.ach-tip-content p {
+  font-size: 11px;
+  color: #1e40af;
+  line-height: 1.4;
+}
