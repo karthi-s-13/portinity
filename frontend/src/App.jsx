@@ -4,6 +4,7 @@ import { ToastProvider } from './components/ui/Toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import LandingPage from './pages/LandingPage';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, loading } = useAuth();
@@ -28,7 +29,7 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/welcome" replace />;
 }
 
 function PublicRoute({ children }) {
@@ -43,6 +44,10 @@ export default function App() {
       <AuthProvider>
         <ToastProvider>
           <Routes>
+            {/* Public landing page */}
+            <Route path="/welcome" element={<LandingPage />} />
+
+            {/* Auth routes */}
             <Route
               path="/login"
               element={<PublicRoute><Login /></PublicRoute>}
@@ -51,10 +56,14 @@ export default function App() {
               path="/register"
               element={<PublicRoute><Register /></PublicRoute>}
             />
+
+            {/* Protected dashboard */}
             <Route
               path="/"
               element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
             />
+
+            {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </ToastProvider>

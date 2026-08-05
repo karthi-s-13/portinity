@@ -25,7 +25,7 @@ import { useToast } from '../ui/Toast';
 import './Sections.css';
 import './ProfileSection.css';
 
-export default function ProfileSection() {
+export default function ProfileSection({ onProfileUpdate }) {
   const { user } = useAuth();
   const toast = useToast();
   const [profile, setProfile] = useState(null);
@@ -76,6 +76,9 @@ export default function ProfileSection() {
       setProfile(res.data);
       toast('Profile updated successfully', 'success');
       closeEdit();
+      if (onProfileUpdate) {
+        onProfileUpdate();
+      }
     } catch (err) {
       toast(err.response?.data?.detail || 'Failed to update profile', 'error');
     } finally {

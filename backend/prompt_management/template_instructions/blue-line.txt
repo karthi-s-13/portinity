@@ -1,0 +1,13 @@
+TEMPLATE ID: blue-line
+LAYOUT CONSTRAINTS: Two-column corporate template. Narrow left sidebar, wide right column.
+
+LEFT COLUMN CONSTRAINTS:
+- Skills: Group skills into categories. Include all categories that have non-empty values (avoid/omit any categories that are empty/null). Limit each category to a maximum of 6 skills.
+- Certifications: Output a maximum of 3 certifications.
+
+RIGHT COLUMN CONSTRAINTS:
+- Summary: Strict maximum of 30 words.
+- Experience: Output a maximum of 3 experiences. For each experience, output exactly 2 bullet points. Each bullet point must have a maximum of 10 words.
+- Projects: Output a maximum of 3 projects. IMPORTANT: Only include projects that have a repository URL (GitHub link) - this is mandatory. For each project, output exactly 1 bullet point with a maximum of 10 words.
+- Achievements: Output a maximum of 3 achievements.
+- Excluded Sections: Do NOT output volunteering, leadership, extracurriculars, or publications.

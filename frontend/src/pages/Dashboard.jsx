@@ -12,10 +12,13 @@ import AchievementsSection from '../components/sections/AchievementsSection';
 import PublicationsSection from '../components/sections/PublicationsSection';
 import VolunteeringSection from '../components/sections/VolunteeringSection';
 import ExtracurricularSection from '../components/sections/ExtracurricularSection';
+import AiResumeSection from '../components/sections/AiResumeSection';
+import API from '../api/axios';
 import './Dashboard.css';
 
 const SECTIONS = {
   dashboard: DashboardOverview,
+  'ai-resume': AiResumeSection,
   profile: ProfileSection,
   education: EducationSection,
   skills: SkillsSection,
@@ -44,6 +47,20 @@ export default function Dashboard() {
   const [activeSection, setActiveSectionState] = useState(getInitialSection);
   const [counts, setCounts] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await API.get('/profile');
+      setProfile(res.data);
+    } catch (err) {
+      console.error('Failed to load profile in Dashboard', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const setActiveSection = (section) => {
     if (SECTIONS[section]) {
@@ -87,12 +104,13 @@ export default function Dashboard() {
       />
       
       <div className="dashboard-main">
-        <Header toggleSidebar={toggleSidebar} />
+        <Header toggleSidebar={toggleSidebar} profile={profile} />
         <main className="dashboard-content">
           <ActiveComponent
             key={activeSection}
             onNavigate={(section) => setActiveSection(section)}
             onCountChange={handleCountChange(activeSection)}
+            onProfileUpdate={fetchProfile}
           />
         </main>
       </div>

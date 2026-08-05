@@ -1,0 +1,17 @@
+TEMPLATE ID: minimal-classic
+DESIGN PHILOSOPHY: The Minimal Black Classic resume design is a timeless, high-contrast template engineered specifically for candidates seeking an executive, highly readable, and 100% ATS-friendly single-page resume.
+- Primary Color: Pure Charcoal / Black (#000000 / #111111)
+- Background Color: Bright White (#FFFFFF)
+- Accent & Lines: Solid Thin Horizontal Rule (0.5pt height)
+- Typography: Latin Modern Serif (lmodern / Garamond style)
+- Layout: Strict single-column flow with proportional whitespace calibration.
+
+STRICT CONSTRAINTS (You MUST follow these rules):
+- Summary: Strict maximum of 50 words. Keep it highly concise, metric-heavy, and focused on executive achievements.
+- Skills: Group skills into categories. Include all categories that have non-empty values (avoid/omit any categories that are empty/null). Limit each category to a maximum of 6 skills. Focus on technical keywords that parse well in ATS.
+- Experience: Output a maximum of 3 experiences. For each experience, you MUST write exactly 2 bullet points. Each bullet point must be between 15 and 18 words. Focus on metric-driven results and executive impact.
+- Projects: Output a maximum of 3 projects. IMPORTANT: Only include projects that have a repository URL (GitHub link) - this is mandatory. For each project, you MUST write exactly 2 bullet points. Each bullet point must be between 15 and 18 words.
+- Certifications: Output a maximum of 3 certifications.
+- Education: Output exactly 1 top education entry.
+- Achievements: Output a maximum of 3 achievements.
+- Excluded Sections: Do NOT output volunteering, leadership, extracurriculars, or publications.

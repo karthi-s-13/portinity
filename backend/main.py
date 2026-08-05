@@ -7,14 +7,14 @@ from database import engine, Base
 from models import (
     User, Profile, Education, Skill, Project,
     Experience, Certification, Achievement, Publication,
-    Volunteering, Extracurricular,
+    Volunteering, Extracurricular, ResumeHistory,
 )
 
 # Import routers
 from routers import (
     auth, profile, education, skill, project,
     experience, certification, achievement, publication,
-    volunteering, extracurricular,
+    volunteering, extracurricular, ai_resume,
 )
 
 
@@ -53,6 +53,7 @@ app.include_router(achievement.router)
 app.include_router(publication.router)
 app.include_router(volunteering.router)
 app.include_router(extracurricular.router)
+app.include_router(ai_resume.router)
 
 
 @app.get("/")

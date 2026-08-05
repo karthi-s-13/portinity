@@ -2,9 +2,22 @@ import { HiMagnifyingGlass, HiBell, HiBars3, HiChevronDown, HiArrowRightOnRectan
 import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
-export default function Header({ toggleSidebar }) {
+export default function Header({ toggleSidebar, profile }) {
   const { user, logout } = useAuth();
   
+  const getDisplayName = () => {
+    if (profile && (profile.first_name || profile.last_name)) {
+      return `${profile.first_name || ''} ${profile.last_name || ''}`.trim();
+    }
+    if (user && user.email) {
+      const namePart = user.email.split('@')[0];
+      return namePart.charAt(0).toUpperCase() + namePart.slice(1);
+    }
+    return 'User';
+  };
+
+  const displayName = getDisplayName();
+
   return (
     <header className="header">
       <div className="header-left">
@@ -32,11 +45,10 @@ export default function Header({ toggleSidebar }) {
 
         <div className="header-user" style={{ marginLeft: 16 }}>
           <div className="header-user-avatar" title={user?.email}>
-            {user?.email?.charAt(0).toUpperCase() || 'U'}
+            {displayName.charAt(0).toUpperCase() || 'U'}
           </div>
           <div className="header-user-info">
-            <span className="header-user-name">Karthikeyan S</span>
-            <span className="header-user-role">Student</span>
+            <span className="header-user-name">{displayName}</span>
           </div>
           <HiChevronDown style={{ color: 'var(--gray-400)', fontSize: 16 }} />
         </div>

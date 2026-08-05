@@ -9,9 +9,10 @@ from models.achievement import Achievement
 from models.publication import Publication
 from models.volunteering import Volunteering
 from models.extracurricular import Extracurricular
+from models.resume_history import ResumeHistory
 
 __all__ = [
     "User", "Profile", "Education", "Skill", "Project",
     "Experience", "Certification", "Achievement", "Publication",
-    "Volunteering", "Extracurricular",
+    "Volunteering", "Extracurricular", "ResumeHistory",
 ]

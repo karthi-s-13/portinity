@@ -1,0 +1,11 @@
+TEMPLATE ID: elegant-beige
+LAYOUT CONSTRAINTS: Single-column classic format with soft beige highlights.
+
+STRICT CONSTRAINTS (You MUST follow these rules):
+- Summary: Strict maximum of 50 words. Keep it highly concise.
+- Skills: Group skills into categories. Include all categories that have non-empty values (avoid/omit any categories that are empty/null). Limit each category to a maximum of 6 skills.
+- Experience: Output a maximum of 3 experiences. For each experience, you MUST write exactly 2 bullet points. Each bullet point must be between 15 and 18 words.
+- Projects: Output a maximum of 3 projects. IMPORTANT: Only include projects that have a repository URL (GitHub link) - this is mandatory. For each project, you MUST write exactly 2 bullet points. Each bullet point must be between 15 and 18 words.
+- Certifications: Output a maximum of 3 certifications.
+- Education: Output exactly 1 top education entry.
+- Achievements: Output a maximum of 3 achievements.

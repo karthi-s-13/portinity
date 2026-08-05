@@ -2,13 +2,14 @@ import {
   HiOutlineSquares2X2, HiUser, HiAcademicCap, HiWrenchScrewdriver, HiCommandLine,
   HiBriefcase, HiDocumentCheck, HiTrophy, HiBookOpen,
   HiHeart, HiPuzzlePiece, HiArrowRightOnRectangle, HiBars3,
-  HiXMark,
+  HiXMark, HiSparkles,
 } from 'react-icons/hi2';
 import { useAuth } from '../../context/AuthContext';
 import logoUrl from '../../assests/portinify_logo.png';
 import './Sidebar.css';
 
 const NAV_ITEMS = [
+  { key: 'ai-resume', label: 'AI Resume Generator', icon: <HiSparkles style={{ color: '#8b5cf6' }} />, section: 'general' },
   { key: 'profile', label: 'Profile', icon: <HiUser />, section: 'general' },
   { key: 'education', label: 'Education', icon: <HiAcademicCap />, section: 'background' },
   { key: 'skills', label: 'Skills', icon: <HiWrenchScrewdriver />, section: 'background' },

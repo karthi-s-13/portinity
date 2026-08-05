@@ -23,3 +23,4 @@ class User(Base):
     publications = relationship("Publication", back_populates="user", cascade="all, delete-orphan")
     volunteerings = relationship("Volunteering", back_populates="user", cascade="all, delete-orphan")
     extracurriculars = relationship("Extracurricular", back_populates="user", cascade="all, delete-orphan")
+    resume_histories = relationship("ResumeHistory", back_populates="user", cascade="all, delete-orphan")
