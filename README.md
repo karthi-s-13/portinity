@@ -15,6 +15,24 @@ Portinity offers four distinct, professional resume templates:
 
 ---
 
+## 🛠️ Technology Stack
+
+Portinity is built on a modular stack separating real-time React UI preview components from a RAG-driven Python FastAPI generation and XeLaTeX compilation backend:
+
+### Backend (AI & PDF Engine)
+* **Framework:** **FastAPI (Python 3.10+)** — High-performance, asynchronous Python web framework for managing profile API endpoints.
+* **RAG Pipeline:** **pgvector & Semantic Retrieval** — Queries user database records based on Job Description embeddings to fetch the most relevant experiences, projects, and skills.
+* **LLM Integration:** **OpenRouter API** (invoking large language models like `Nemotron-70B`) — Tailors and structures resume JSON outputs to target the job description.
+* **PDF Rendering:** **XeLaTeX Engine** — Compiles the Jinja2-rendered LaTeX templates into baseline-aligned, print-ready PDFs.
+* **Database:** **PostgreSQL 17** — Manages database records for profiles, history logging, and stores vector embeddings.
+
+### Frontend (Interactive Workspace)
+* **Framework:** **React 18 & Vite** — Lightweight React framework for swift hot-reloading and modular component structures.
+* **Icons:** **React Icons (Hi2)** — Provides visual contact indicators.
+* **Design System:** **Vanilla CSS** — Custom responsive stylesheets calibrated to standard A4 sheet dimensions.
+
+---
+
 ## ⚡ Key Features
 
 * **Dynamic Database Limits Adaptation:** Queries database counts for experiences and projects to dynamically adapt the page allocation budget (e.g. `exp_limit`, `proj_limit`) and layout constraints at LLM generation time, ensuring the resume fits perfectly on a single page.
