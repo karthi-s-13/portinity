@@ -17,7 +17,7 @@ from rag.rag_engine import (
     embed_and_store_user_data,
     generate_tailored_resume
 )
-from services.pdf_compiler import compile_latex_to_pdf
+from services.html_compiler import compile_html_to_pdf
 
 router = APIRouter(prefix="/api/ai-resume", tags=["AI Resume RAG Generator"])
 
@@ -345,22 +345,23 @@ def generate_ai_resume(
         )
 
 
-class CompilePDFRequest(BaseModel):
-    latex_code: str
+
+class CompileHTMLPDFRequest(BaseModel):
+    html_content: str
 
 
-@router.post("/compile-pdf")
-def compile_pdf(
-    payload: CompilePDFRequest,
+@router.post("/compile-html-pdf")
+async def compile_html_pdf(
+    payload: CompileHTMLPDFRequest,
     current_user: User = Depends(get_current_user)
 ):
     """
-    Compiles the provided LaTeX code into a PDF binary.
+    Compiles the provided HTML string into a PDF binary.
     """
-    if not payload.latex_code.strip():
-        raise HTTPException(status_code=400, detail="LaTeX code cannot be empty.")
+    if not payload.html_content.strip():
+        raise HTTPException(status_code=400, detail="HTML content cannot be empty.")
 
-    pdf_bytes = compile_latex_to_pdf(payload.latex_code)
+    pdf_bytes = await compile_html_to_pdf(payload.html_content)
     
     return Response(
         content=pdf_bytes,

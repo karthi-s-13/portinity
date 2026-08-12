@@ -221,7 +221,7 @@ export default function DashboardOverview({ onNavigate }) {
             <p>Create ATS-friendly resumes in seconds with AI.</p>
           </div>
         </div>
-        <Button variant="primary">
+        <Button variant="primary" onClick={() => onNavigate('ai-resume')}>
           Create Resume <HiArrowRight style={{ marginLeft: 4 }} />
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import { HiMagnifyingGlass, HiBell, HiBars3, HiChevronDown, HiArrowRightOnRectangle } from 'react-icons/hi2';
+import { HiMagnifyingGlass, HiBars3, HiChevronDown, HiArrowRightOnRectangle } from 'react-icons/hi2';
 import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
@@ -21,23 +21,12 @@ export default function Header({ toggleSidebar, profile }) {
   return (
     <header className="header">
       <div className="header-left">
-        <button className="header-mobile-toggle" onClick={toggleSidebar}>
+        <button className="header-toggle" onClick={toggleSidebar} aria-label="Toggle Sidebar">
           <HiBars3 />
         </button>
-        <div className="header-search">
-          <HiMagnifyingGlass className="header-search-icon" />
-          <input type="text" placeholder="Search anything..." />
-          <div className="header-search-shortcut">
-            <kbd>⌘</kbd> <kbd>K</kbd>
-          </div>
-        </div>
       </div>
       
       <div className="header-right">
-        <button className="header-btn">
-          <HiBell />
-          <span className="header-btn-badge"></span>
-        </button>
         
         <button className="header-btn" onClick={logout} title="Logout" style={{ marginLeft: 8 }}>
           <HiArrowRightOnRectangle />

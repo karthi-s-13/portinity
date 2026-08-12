@@ -1,7 +1,7 @@
-import html2pdf from 'html2pdf.js';
+import api from '../../api/axios';
 
 /**
- * High-quality PDF Exporter using html2pdf.js
+ * High-quality PDF Exporter using backend Chromium Puppeteer rendering
  * @param {HTMLElement} element - Target HTML container element
  * @param {string} fileName - Output PDF filename
  */
@@ -39,37 +39,50 @@ export async function downloadResumePdf(element, fileName = 'Tailored_Resume.pdf
     clone.firstElementChild.style.margin = '0';
   }
 
-  // Temporarily attach to DOM in a hidden container so CSS layouts render correctly
-  const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.top = '-9999px';
-  container.style.left = '-9999px';
-  container.style.width = '210mm'; // Maintain exact A4 width boundary
-  container.appendChild(clone);
-  document.body.appendChild(container);
+  // Collect all stylesheets and link tags from head to compile a self-contained HTML payload
+  const styleTags = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+    .map(el => el.outerHTML)
+    .join('\n');
 
-  const opt = {
-    margin: 0,
-    filename: fileName,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2.5, 
-      useCORS: true, 
-      letterRendering: true,
-      backgroundColor: '#ffffff'
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
+  // Wrap the element in a standard HTML scaffold
+  const selfContainedHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Resume Export</title>
+        ${styleTags}
+        <style>
+          body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #ffffff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        </style>
+      </head>
+      <body>
+        ${clone.outerHTML}
+      </body>
+    </html>
+  `;
 
-  try {
-    await html2pdf().set(opt).from(clone).save();
-    document.body.removeChild(container);
-    return true;
-  } catch (err) {
-    if (document.body.contains(container)) {
-      document.body.removeChild(container);
-    }
-    console.error('PDF export error:', err);
-    throw err;
-  }
+  // Make the post call to the backend compile-html-pdf endpoint
+  const response = await api.post('/ai-resume/compile-html-pdf', {
+    html_content: selfContainedHtml
+  }, {
+    responseType: 'blob'
+  });
+
+  // Create a download link for the compiled PDF blob
+  const blob = new Blob([response.data], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  link.click();
+  URL.revokeObjectURL(url);
+
+  return true;
 }

@@ -489,7 +489,7 @@ export default function TemplateSelector({ selectedTemplateId, onSelectTemplate,
             </div>
 
             {/* Embedded Live Paper Viewport */}
-            <div className={`template-v2-paper-box ${isFullScreen ? 'fullscreen' : ''}`}>
+            <div className="template-v2-paper-box">
               <ResumeRenderer 
                 templateId={selectedTemplateId} 
                 data={previewData} 
@@ -667,6 +667,93 @@ export default function TemplateSelector({ selectedTemplateId, onSelectTemplate,
         </div>
 
       </div>
+
+      {/* Fullscreen A4 Preview Modal */}
+      {isFullScreen && (
+        <div 
+          className="template-fullscreen-modal-backdrop"
+          onClick={() => setIsFullScreen(false)}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(15, 23, 42, 0.75)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            zIndex: 2000,
+            padding: '40px 20px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+        >
+          <div 
+            className="template-fullscreen-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              backgroundColor: '#1e293b',
+              borderRadius: '12px',
+              padding: '24px',
+              width: '860px',
+              maxWidth: '95vw',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            {/* Header controls inside modal */}
+            <div style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '16px',
+              color: '#ffffff'
+            }}>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: '800' }}>
+                {activeTemplate.name} Preview (A4 Size)
+              </h3>
+              <button 
+                onClick={() => setIsFullScreen(false)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '6px',
+                  padding: '6px 12px',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                Close Preview
+              </button>
+            </div>
+
+            {/* A4 Paper container */}
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '4px',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.25)',
+              padding: '0',
+              boxSizing: 'border-box',
+              overflow: 'hidden',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+              <ResumeRenderer 
+                templateId={selectedTemplateId} 
+                data={previewData} 
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

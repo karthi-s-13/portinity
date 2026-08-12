@@ -385,9 +385,6 @@ export default function VolunteeringSection({ onCountChange }) {
               <span className="vol-stat-value">{totalVolunteerWork}</span>
             </div>
           </div>
-          <button className="vol-stat-link" onClick={() => setSelectedRole('All Roles')}>
-            View all activities →
-          </button>
         </div>
 
         <div className="vol-stat-card">
@@ -398,9 +395,6 @@ export default function VolunteeringSection({ onCountChange }) {
               <span className="vol-stat-value">{totalHoursContributed} hrs</span>
             </div>
           </div>
-          <button className="vol-stat-link" onClick={() => setSortBy('Most Hours')}>
-            View hours summary →
-          </button>
         </div>
 
         <div className="vol-stat-card">
@@ -411,9 +405,6 @@ export default function VolunteeringSection({ onCountChange }) {
               <span className="vol-stat-value">{uniqueOrganizations}</span>
             </div>
           </div>
-          <button className="vol-stat-link" onClick={() => setSelectedCause('All Causes')}>
-            View organizations →
-          </button>
         </div>
 
         <div className="vol-stat-card">
@@ -424,9 +415,6 @@ export default function VolunteeringSection({ onCountChange }) {
               <span className="vol-stat-value">350+</span>
             </div>
           </div>
-          <button className="vol-stat-link">
-            View impact →
-          </button>
         </div>
       </div>
 

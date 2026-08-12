@@ -23,6 +23,7 @@ export function AuthProvider({ children }) {
     const { access_token, user: userData } = res.data;
     localStorage.setItem('portinity_token', access_token);
     localStorage.setItem('portinity_user', JSON.stringify(userData));
+    localStorage.removeItem('activeSection');
     setToken(access_token);
     setUser(userData);
     return userData;
@@ -33,6 +34,7 @@ export function AuthProvider({ children }) {
     const { access_token, user: userData } = res.data;
     localStorage.setItem('portinity_token', access_token);
     localStorage.setItem('portinity_user', JSON.stringify(userData));
+    localStorage.removeItem('activeSection');
     setToken(access_token);
     setUser(userData);
     return userData;
@@ -41,6 +43,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem('portinity_token');
     localStorage.removeItem('portinity_user');
+    localStorage.removeItem('activeSection');
     setToken(null);
     setUser(null);
   };

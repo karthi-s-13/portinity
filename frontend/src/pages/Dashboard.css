@@ -1,38 +1,67 @@
+/* ===== DASHBOARD LAYOUT ===== */
 .dashboard {
   display: flex;
   min-height: 100vh;
   background: var(--bg-secondary);
+  position: relative;
 }
 
+/* ===== MAIN CONTENT AREA ===== */
 .dashboard-main {
   flex: 1;
   display: flex;
   flex-direction: column;
   margin-left: var(--sidebar-width);
   min-width: 0;
+  transition: margin-left var(--transition-base);
 }
 
+/* When sidebar is collapsed, expand main to full width */
+.dashboard.sidebar-collapsed .dashboard-main {
+  margin-left: 0;
+}
+
+/* ===== CONTENT PADDING ===== */
 .dashboard-content {
   flex: 1;
-  padding-top: var(--space-6);
-  padding-right: var(--space-6);
-  padding-bottom: var(--space-6);
-  padding-left: var(--space-6);
+  padding: var(--space-6);
   max-width: 100%;
   width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
+/* ===== TABLET (768px–1024px) ===== */
 @media (max-width: 1024px) {
-  .dashboard-content {
-    padding: var(--space-5) 0;
-  }
-}
-
-@media (max-width: 768px) {
   .dashboard-main {
+    margin-left: var(--sidebar-width);
+  }
+
+  .dashboard.sidebar-collapsed .dashboard-main {
     margin-left: 0;
   }
+
   .dashboard-content {
-    padding: var(--space-4) 0;
+    padding: var(--space-5);
   }
 }
+
+/* ===== MOBILE (<= 768px) ===== */
+@media (max-width: 768px) {
+  /* On mobile, sidebar is always an overlay — main is never indented */
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+
+  .dashboard-content {
+    padding: var(--space-4);
+  }
+}
+
+/* ===== SMALL MOBILE (<= 480px) ===== */
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: var(--space-3);
+  }
+}
+

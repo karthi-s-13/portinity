@@ -127,8 +127,8 @@ export default function ProjectsSection({ onCountChange }) {
       live_url: '',
       repo_url: '',
       image_url: '',
-      start_year: '',
-      end_year: ''
+      start_month: '',
+      end_month: ''
     });
     setModalOpen(true);
   };
@@ -142,8 +142,8 @@ export default function ProjectsSection({ onCountChange }) {
       category: item.category || 'Web',
       status: isCompleted ? 'Completed' : 'In Progress',
       is_current: !item.end_date,
-      start_year: item.start_date ? String(item.start_date).substring(0, 4) : '',
-      end_year: item.end_date ? String(item.end_date).substring(0, 4) : ''
+      start_month: item.start_date ? String(item.start_date).substring(0, 7) : '',
+      end_month: item.end_date ? String(item.end_date).substring(0, 7) : ''
     });
     setOpenDropdownId(null);
     setModalOpen(true);
@@ -168,8 +168,8 @@ export default function ProjectsSection({ onCountChange }) {
       image_url: form.image_url?.trim() || null,
       role: form.role?.trim() || null,
       category: form.category || 'Web',
-      start_date: form.start_year ? `${form.start_year}-01-01` : null,
-      end_date: form.is_current ? null : form.end_year ? `${form.end_year}-12-31` : null
+      start_date: form.start_month ? `${form.start_month}-01` : null,
+      end_date: form.is_current ? null : form.end_month ? `${form.end_month}-01` : null
     };
 
     try {
@@ -196,10 +196,17 @@ export default function ProjectsSection({ onCountChange }) {
     }
   };
 
+  const formatDateLabel = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+
   const formatYearRange = (item) => {
-    const start = item.start_date ? String(item.start_date).substring(0, 4) : '';
-    const end = item.end_date ? String(item.end_date).substring(0, 4) : 'Present';
-    if (!start && !item.end_date) return null;
+    const start = item.start_date ? formatDateLabel(item.start_date) : '';
+    const end = item.is_current || !item.end_date ? 'Present' : formatDateLabel(item.end_date);
+    if (!start && !item.end_date && !item.is_current) return null;
     return `${start || '2024'} – ${end}`;
   };
 
@@ -694,19 +701,17 @@ export default function ProjectsSection({ onCountChange }) {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <Input
-              label="Start Year"
-              type="number"
-              value={form.start_year || ''}
-              onChange={handleChange('start_year')}
-              placeholder="2024"
+              label="Start Month & Year"
+              type="month"
+              value={form.start_month || ''}
+              onChange={handleChange('start_month')}
             />
             <Input
-              label="End Year"
-              type="number"
+              label="End Month & Year"
+              type="month"
               disabled={!!form.is_current}
-              value={form.is_current ? '' : form.end_year || ''}
-              onChange={handleChange('end_year')}
-              placeholder="2024"
+              value={form.is_current ? '' : form.end_month || ''}
+              onChange={handleChange('end_month')}
             />
           </div>
 

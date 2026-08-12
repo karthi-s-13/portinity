@@ -251,22 +251,26 @@ export default function GrayBannerTemplate({ data }) {
     <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6px', marginTop: '2px' }}>
       <tbody>
         <tr>
-          <td style={{ width: '1px', whiteSpace: 'nowrap', padding: 0 }}>
-            <div style={{
-              backgroundColor: '#27272A',
-              color: '#ffffff',
-              padding: '3px 8px',
-              borderRadius: '2px',
-              fontSize: '9pt',
-              fontWeight: '700',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px'
-            }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                {getSectionIcon(sectionKey)}
-                <span>{title}</span>
-              </span>
-            </div>
+          <td style={{
+            width: '1px',
+            whiteSpace: 'nowrap',
+            padding: '4px 8px',
+            backgroundColor: '#27272A',
+            color: '#ffffff',
+            borderRadius: '2px',
+            fontSize: '9pt',
+            fontWeight: '700',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            lineHeight: '1',
+            verticalAlign: 'middle'
+          }}>
+            <span style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px', lineHeight: '1' }}>
+              {getSectionIcon(sectionKey)}
+            </span>
+            <span style={{ display: 'inline-block', verticalAlign: 'middle', lineHeight: '1', position: 'relative', top: '-1px' }}>
+              {title}
+            </span>
           </td>
           <td style={{ padding: '0 0 0 8px', verticalAlign: 'middle', width: '100%' }}>
             <div style={{ height: '0.8pt', backgroundColor: '#27272A', width: '100%' }} />
@@ -348,37 +352,87 @@ export default function GrayBannerTemplate({ data }) {
           marginTop: '6px'
         }}>
           {email && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <HiEnvelope style={{ color: '#27272A', fontSize: '10pt', flexShrink: 0 }} />
-              <a href={`mailto:${email}`} style={{ color: '#18181B', textDecoration: 'none' }}>{email}</a>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <table style={{ borderCollapse: 'collapse', display: 'inline-table', verticalAlign: 'middle' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: 0, paddingRight: '4px', verticalAlign: 'middle', lineHeight: 1 }}>
+                      <HiEnvelope style={{ color: '#27272A', fontSize: '10pt', display: 'block' }} />
+                    </td>
+                    <td style={{ padding: 0, verticalAlign: 'middle', lineHeight: 1 }}>
+                      <a href={`mailto:${email}`} style={{ color: '#18181B', textDecoration: 'none' }}>{email}</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           )}
           {phone && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <HiPhone style={{ color: '#27272A', fontSize: '10pt', flexShrink: 0 }} />
-              <span>{phone}</span>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <table style={{ borderCollapse: 'collapse', display: 'inline-table', verticalAlign: 'middle' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: 0, paddingRight: '4px', verticalAlign: 'middle', lineHeight: 1 }}>
+                      <HiPhone style={{ color: '#27272A', fontSize: '10pt', display: 'block' }} />
+                    </td>
+                    <td style={{ padding: 0, verticalAlign: 'middle', lineHeight: 1 }}>
+                      <span>{phone}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           )}
           {location && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <HiMapPin style={{ color: '#27272A', fontSize: '10pt', flexShrink: 0 }} />
-              <span>{location}</span>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <table style={{ borderCollapse: 'collapse', display: 'inline-table', verticalAlign: 'middle' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: 0, paddingRight: '4px', verticalAlign: 'middle', lineHeight: 1 }}>
+                      <HiMapPin style={{ color: '#27272A', fontSize: '10pt', display: 'block' }} />
+                    </td>
+                    <td style={{ padding: 0, verticalAlign: 'middle', lineHeight: 1 }}>
+                      <span>{location}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           )}
           {linkedin && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <LinkedInIcon color="#27272A" />
-              <a href={linkedin.startsWith('http') ? linkedin : `https://${linkedin}`} target="_blank" rel="noreferrer" style={{ color: '#18181B', textDecoration: 'none' }}>
-                {linkedin.replace(/^https?:\/\/(www\.)?/, '')}
-              </a>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <table style={{ borderCollapse: 'collapse', display: 'inline-table', verticalAlign: 'middle' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: 0, paddingRight: '4px', verticalAlign: 'middle', lineHeight: 1 }}>
+                      <LinkedInIcon color="#27272A" />
+                    </td>
+                    <td style={{ padding: 0, verticalAlign: 'middle', lineHeight: 1 }}>
+                      <a href={linkedin.startsWith('http') ? linkedin : `https://${linkedin}`} target="_blank" rel="noreferrer" style={{ color: '#18181B', textDecoration: 'none' }}>
+                        {linkedin.replace(/^https?:\/\/(www\.)?/, '')}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           )}
           {github && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
-              <GitHubIcon color="#27272A" />
-              <a href={github.startsWith('http') ? github : `https://${github}`} target="_blank" rel="noreferrer" style={{ color: '#18181B', textDecoration: 'none' }}>
-                {github.replace(/^https?:\/\/(www\.)?/, '')}
-              </a>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <table style={{ borderCollapse: 'collapse', display: 'inline-table', verticalAlign: 'middle' }}>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: 0, paddingRight: '4px', verticalAlign: 'middle', lineHeight: 1 }}>
+                      <GitHubIcon color="#27272A" />
+                    </td>
+                    <td style={{ padding: 0, verticalAlign: 'middle', lineHeight: 1 }}>
+                      <a href={github.startsWith('http') ? github : `https://${github}`} target="_blank" rel="noreferrer" style={{ color: '#18181B', textDecoration: 'none' }}>
+                        {github.replace(/^https?:\/\/(www\.)?/, '')}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </span>
           )}
         </div>

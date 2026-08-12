@@ -387,9 +387,6 @@ export default function PublicationsSection({ onCountChange }) {
               <span className="pub-stat-value">{totalPublications}</span>
             </div>
           </div>
-          <button className="pub-stat-link" onClick={() => setSelectedType('All Types')}>
-            View all publications →
-          </button>
         </div>
 
         <div className="pub-stat-card">
@@ -400,9 +397,6 @@ export default function PublicationsSection({ onCountChange }) {
               <span className="pub-stat-value">{peerReviewedCount}</span>
             </div>
           </div>
-          <button className="pub-stat-link" onClick={() => setSelectedType('Peer Reviewed')}>
-            View peer reviewed →
-          </button>
         </div>
 
         <div className="pub-stat-card">
@@ -413,9 +407,6 @@ export default function PublicationsSection({ onCountChange }) {
               <span className="pub-stat-value">{totalCitations}</span>
             </div>
           </div>
-          <button className="pub-stat-link" onClick={() => setSortBy('Most Cited')}>
-            View citations →
-          </button>
         </div>
 
         <div className="pub-stat-card">
@@ -426,9 +417,6 @@ export default function PublicationsSection({ onCountChange }) {
               <span className="pub-stat-value">{hIndex}</span>
             </div>
           </div>
-          <button className="pub-stat-link">
-            View metrics →
-          </button>
         </div>
       </div>
 

@@ -1,25 +1,43 @@
+/* ===== HEADER ===== */
 .header {
-  height: 72px;
+  height: var(--header-height);
+  min-height: var(--header-height);
   background: white;
   border-bottom: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-8);
+  padding: 0 var(--space-6);
   position: sticky;
   top: 0;
   z-index: 40;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  gap: var(--space-4);
+  flex-shrink: 0;
 }
 
+/* ===== HEADER LEFT ===== */
 .header-left {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  flex-shrink: 0;
 }
 
+/* ===== HEADER RIGHT ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+/* ===== SEARCH ===== */
 .header-search {
   position: relative;
-  width: 400px;
+  width: 320px;
+  flex: 1;
+  max-width: 400px;
 }
 
 .header-search-icon {
@@ -28,12 +46,13 @@
   top: 50%;
   transform: translateY(-50%);
   color: var(--gray-400);
-  font-size: 20px;
+  font-size: 18px;
+  pointer-events: none;
 }
 
 .header-search input {
   width: 100%;
-  height: 40px;
+  height: 38px;
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-lg);
@@ -41,6 +60,7 @@
   font-size: var(--font-sm);
   color: var(--text-primary);
   transition: var(--transition-base);
+  font-family: var(--font-family);
 }
 
 .header-search input:focus {
@@ -71,33 +91,32 @@
   font-family: inherit;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-6);
-}
-
+/* ===== ICON BUTTONS ===== */
 .header-btn {
   background: none;
   border: none;
   color: var(--gray-500);
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--transition-base);
   position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
 }
 
 .header-btn:hover {
   color: var(--text-primary);
+  background: var(--gray-100);
 }
 
 .header-btn-badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 4px;
+  right: 4px;
   width: 8px;
   height: 8px;
   background: var(--error);
@@ -105,16 +124,24 @@
   border: 2px solid white;
 }
 
+/* ===== USER INFO ===== */
 .header-user {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.header-user:hover {
+  background-color: var(--gray-50);
 }
 
 .header-user-avatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
   display: flex;
@@ -123,6 +150,7 @@
   color: white;
   font-weight: 700;
   font-size: var(--font-sm);
+  flex-shrink: 0;
 }
 
 .header-user-info {
@@ -134,6 +162,7 @@
   font-size: var(--font-sm);
   font-weight: 600;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .header-user-role {
@@ -141,26 +170,81 @@
   color: var(--text-tertiary);
 }
 
-.header-mobile-toggle {
-  display: none;
+/* ===== HAMBURGER TOGGLE ===== */
+.header-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 22px;
   color: var(--text-primary);
   cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+  flex-shrink: 0;
 }
 
+.header-toggle:hover {
+  background-color: var(--gray-100);
+}
+
+/* ===== TABLET (768px–1024px) ===== */
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 var(--space-5);
+    gap: var(--space-3);
+  }
+
+  .header-search {
+    width: 220px;
+  }
+}
+
+/* ===== MOBILE (<=768px) ===== */
 @media (max-width: 768px) {
   .header {
     padding: 0 var(--space-4);
+    gap: var(--space-2);
   }
+
   .header-search {
     display: none;
   }
-  .header-mobile-toggle {
-    display: block;
-  }
+
   .header-user-info {
     display: none;
   }
+
+  .header-right {
+    gap: var(--space-2);
+  }
 }
+
+/* ===== SMALL MOBILE (<=480px) ===== */
+@media (max-width: 480px) {
+  .header {
+    padding: 0 var(--space-3);
+  }
+
+  .header-btn {
+    font-size: 20px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-toggle {
+    font-size: 20px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: var(--font-xs);
+  }
+}
+

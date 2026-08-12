@@ -1,36 +1,52 @@
+/* ===== SIDEBAR ===== */
 .sidebar {
   position: fixed;
   left: 0;
   top: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  height: 100dvh; /* dynamic viewport height for mobile */
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
   z-index: 100;
-  transition: transform var(--transition-base);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  overflow: hidden;
+  will-change: transform;
 }
 
+/* Desktop collapsed: slide sidebar off-screen */
+.dashboard.sidebar-collapsed .sidebar {
+  transform: translateX(-100%);
+}
+
+/* ===== SIDEBAR BRAND / LOGO ===== */
 .sidebar-brand {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-5);
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+  min-height: var(--header-height);
 }
 
 .sidebar-logo-img {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .sidebar-brand-name {
-  font-size: var(--font-xl);
+  font-size: var(--font-lg);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebar-brand-tag {
@@ -39,15 +55,34 @@
   font-weight: 400;
 }
 
+/* ===== SIDEBAR NAVIGATION ===== */
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-4);
+  overflow-x: hidden;
+  padding: var(--space-3) var(--space-3);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-200) transparent;
 }
 
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: var(--gray-200);
+  border-radius: 4px;
+}
+
+/* ===== DASHBOARD BUTTON ===== */
 .sidebar-dashboard-btn {
   display: flex;
   align-items: center;
@@ -57,13 +92,14 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
-  font-size: var(--font-base);
+  font-size: var(--font-sm);
   font-weight: 600;
   color: var(--text-secondary);
   border: none;
   background: none;
   width: 100%;
   text-align: left;
+  white-space: nowrap;
 }
 
 .sidebar-dashboard-btn:hover {
@@ -81,16 +117,19 @@
   color: white;
 }
 
+/* ===== SECTION LABELS ===== */
 .sidebar-section-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   padding: var(--space-3) var(--space-3) var(--space-1);
   margin-top: var(--space-2);
+  white-space: nowrap;
 }
 
+/* ===== NAV ITEMS ===== */
 .sidebar-item {
   display: flex;
   align-items: center;
@@ -106,6 +145,7 @@
   background: none;
   width: 100%;
   text-align: left;
+  white-space: nowrap;
 }
 
 .sidebar-item:hover {
@@ -120,16 +160,18 @@
   box-shadow: inset 0 0 0 1px var(--primary-200);
 }
 
+/* ===== ICON ===== */
 .sidebar-item-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  font-size: var(--font-lg);
+  width: 20px;
+  height: 20px;
+  font-size: var(--font-base);
   flex-shrink: 0;
 }
 
+/* ===== COUNT BADGE ===== */
 .sidebar-item-count {
   margin-left: auto;
   font-size: 11px;
@@ -145,17 +187,15 @@
   color: var(--primary-800);
 }
 
-
-
-/* Mobile toggle */
+/* ===== MOBILE TOGGLE BUTTON (outside sidebar) ===== */
 .sidebar-toggle {
   display: none;
   position: fixed;
   top: var(--space-4);
   left: var(--space-4);
   z-index: 200;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   background: var(--bg-primary);
@@ -164,27 +204,69 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-  font-size: var(--font-xl);
+  font-size: 20px;
 }
 
+/* ===== OVERLAY BACKDROP ===== */
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ===== TABLET (768px–1024px) — Collapsible push sidebar ===== */
+@media (max-width: 1024px) {
+  .sidebar {
+    /* Tablet: sidebar visible by default, can be collapsed */
+    transform: translateX(0);
+  }
+
+  .dashboard.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+  }
+}
+
+/* ===== MOBILE (<=768px) — Overlay drawer ===== */
 @media (max-width: 768px) {
   .sidebar {
+    /* Mobile: always starts hidden off-screen */
+    transform: translateX(-100%);
+    box-shadow: none;
+    z-index: 300;
+  }
+
+  /* Open state: slide in and show shadow */
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl), 0 0 40px rgba(0,0,0,0.15);
+  }
+
+  /* On mobile, the dashboard class doesn't control sidebar — we use isOpen prop */
+  .dashboard.sidebar-open .sidebar,
+  .dashboard.sidebar-collapsed .sidebar {
+    /* Reset — mobile uses .sidebar.open class instead */
     transform: translateX(-100%);
   }
 
-  .sidebar.open {
+  .dashboard.sidebar-open .sidebar.open {
     transform: translateX(0);
-    box-shadow: var(--shadow-xl);
   }
 
-  .sidebar-toggle {
-    display: flex;
-  }
-
+  /* Backdrop overlay — only mobile */
   .sidebar-backdrop {
+    display: block;
     position: fixed;
     inset: 0;
     background: var(--bg-overlay);
-    z-index: 99;
+    z-index: 299;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease;
   }
 }
+
+/* ===== SMALL MOBILE (<=480px) ===== */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 280px;
+  }
+}
+

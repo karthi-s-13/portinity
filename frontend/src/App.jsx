@@ -45,7 +45,7 @@ export default function App() {
         <ToastProvider>
           <Routes>
             {/* Public landing page */}
-            <Route path="/welcome" element={<LandingPage />} />
+            <Route path="/welcome" element={<PublicRoute><LandingPage /></PublicRoute>} />
 
             {/* Auth routes */}
             <Route
@@ -62,6 +62,7 @@ export default function App() {
               path="/"
               element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
             />
+
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

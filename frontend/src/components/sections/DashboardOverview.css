@@ -1,8 +1,10 @@
 .overview-container {
   padding: 0;
-  max-width: 97%;
+  max-width: 100%;
   width: 100%;
   margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .overview-header {
@@ -175,8 +177,8 @@
 /* Main Grid */
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: var(--space-6);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
   margin-bottom: var(--space-6);
 }
 
@@ -404,25 +406,104 @@
   font-size: var(--font-sm);
 }
 
+/* ===== TABLET (768px–1024px) ===== */
 @media (max-width: 1024px) {
   .stats-grid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
   }
+
   .main-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .overview-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .overview-title {
+    font-size: var(--font-xl);
   }
 }
 
+/* ===== MOBILE (<=768px) ===== */
 @media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .overview-container {
+    max-width: 100%;
   }
-  .resume-banner {
-    flex-direction: column;
-    text-align: center;
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
     gap: var(--space-4);
   }
-  .resume-banner-left {
+
+  .resume-banner {
     flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .resume-banner-left {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .overview-header {
+    margin-bottom: var(--space-4);
   }
 }
+
+/* ===== SMALL MOBILE (<=480px) ===== */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .stat-card {
+    padding: var(--space-4);
+  }
+
+  .stat-value {
+    font-size: 26px;
+  }
+
+  .dashboard-panel {
+    padding: var(--space-4);
+  }
+
+  .resume-banner {
+    padding: var(--space-4);
+  }
+
+  .resume-banner-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .resume-banner-content h3 {
+    font-size: var(--font-lg);
+  }
+
+  .resume-banner-left {
+    flex-direction: row;
+    gap: var(--space-3);
+  }
+
+  .overview-actions {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+}
+

@@ -2,7 +2,7 @@ import {
   HiOutlineSquares2X2, HiUser, HiAcademicCap, HiWrenchScrewdriver, HiCommandLine,
   HiBriefcase, HiDocumentCheck, HiTrophy, HiBookOpen,
   HiHeart, HiPuzzlePiece, HiArrowRightOnRectangle, HiBars3,
-  HiXMark, HiSparkles,
+  HiXMark, HiSparkles, HiGlobeAlt,
 } from 'react-icons/hi2';
 import { useAuth } from '../../context/AuthContext';
 import logoUrl from '../../assests/portinify_logo.png';
@@ -34,7 +34,8 @@ export default function Sidebar({ activeSection, onSectionChange, counts = {}, i
 
   const handleNav = (key) => {
     onSectionChange(key);
-    if (onClose) onClose();
+    // Only auto-close sidebar on mobile viewports
+    if (onClose && window.innerWidth <= 768) onClose();
   };
 
   const renderNav = () => {

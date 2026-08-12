@@ -46,7 +46,7 @@ export default function Dashboard() {
 
   const [activeSection, setActiveSectionState] = useState(getInitialSection);
   const [counts, setCounts] = useState({});
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
   const [profile, setProfile] = useState(null);
 
   const fetchProfile = async () => {
@@ -89,15 +89,30 @@ export default function Dashboard() {
     });
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
+  // Sync sidebar state on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        // On desktop/tablet: default to open unless user explicitly collapsed
+        // We only auto-open when crossing above 768, not forcing on tablet
+      } else {
+        // On mobile: always close sidebar when resizing to mobile
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const ActiveComponent = SECTIONS[activeSection] || DashboardOverview;
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${sidebarOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
       <Sidebar
         activeSection={activeSection}
-        onSectionChange={(s) => { setActiveSection(s); setSidebarOpen(false); }}
+        onSectionChange={(s) => setActiveSection(s)}
         counts={counts}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}

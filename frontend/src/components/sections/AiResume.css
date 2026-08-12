@@ -864,3 +864,86 @@ input:checked + .ai-v2-slider:before {
   border-radius: 20px;
 }
 
+/* ===== RESPONSIVE: TABLET (<=1024px) ===== */
+@media (max-width: 1024px) {
+  .ai-v2-topbar {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+
+  .ai-step-item {
+    padding: 6px 10px;
+    font-size: 0.82rem;
+  }
+
+  .ai-v2-card {
+    padding: 16px;
+  }
+}
+
+/* ===== RESPONSIVE: MOBILE (<=768px) ===== */
+@media (max-width: 768px) {
+  .ai-resume-v2-page {
+    max-width: 100%;
+  }
+
+  .ai-v2-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .ai-v2-stepper {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .ai-step-item {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+
+  .ai-v2-ats-badge-container {
+    align-self: flex-start;
+  }
+
+  .ai-v2-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .ai-v2-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .ai-v2-template-drawer {
+    padding: 14px;
+  }
+}
+
+/* ===== RESPONSIVE: SMALL MOBILE (<=480px) ===== */
+@media (max-width: 480px) {
+  .ai-v2-topbar {
+    padding: 10px 12px;
+  }
+
+  .ai-step-item {
+    font-size: 0.75rem;
+    padding: 5px 8px;
+  }
+
+  .ai-v2-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .ai-v2-template-drawer {
+    padding: 12px;
+    border-radius: 12px;
+  }
+}
+
+

@@ -329,9 +329,6 @@ export default function ExtracurricularSection({ onCountChange }) {
               <span className="extra-stat-value">{totalActivities}</span>
             </div>
           </div>
-          <button className="extra-stat-link" onClick={() => setSelectedCategory('All Categories')}>
-            View all activities →
-          </button>
         </div>
 
         <div className="extra-stat-card">
@@ -342,9 +339,6 @@ export default function ExtracurricularSection({ onCountChange }) {
               <span className="extra-stat-value">{yearsActiveText}</span>
             </div>
           </div>
-          <button className="extra-stat-link">
-            View timeline →
-          </button>
         </div>
 
         <div className="extra-stat-card">
@@ -355,9 +349,6 @@ export default function ExtracurricularSection({ onCountChange }) {
               <span className="extra-stat-value">{leadershipRolesCount}</span>
             </div>
           </div>
-          <button className="extra-stat-link" onClick={() => setSelectedCategory('Leadership')}>
-            View leadership →
-          </button>
         </div>
 
         <div className="extra-stat-card">
@@ -368,9 +359,6 @@ export default function ExtracurricularSection({ onCountChange }) {
               <span className="extra-stat-value">{uniqueTeamsCount}</span>
             </div>
           </div>
-          <button className="extra-stat-link">
-            View all teams →
-          </button>
         </div>
       </div>
 

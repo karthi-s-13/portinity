@@ -12,7 +12,7 @@ import Input from '../ui/Input';
 import { useToast } from '../ui/Toast';
 import './Achievements.css';
 
-const TYPES = ['Award', 'Recognition', 'Milestone', 'Other'];
+const TYPES = ['Award', 'Recognition', 'Milestone', 'Competition', 'Scholarship', 'Certification', 'Patent', 'Other'];
 
 const CATEGORIES = [
   'Academic',
@@ -228,8 +228,10 @@ export default function AchievementsSection({ onCountChange }) {
 
   const renderBadgeIcon = (type) => {
     switch (type) {
-      case 'Award': return <HiTrophy />;
-      case 'Recognition': return <HiOutlineAcademicCap />;
+      case 'Award':
+      case 'Competition': return <HiTrophy />;
+      case 'Recognition':
+      case 'Scholarship': return <HiOutlineAcademicCap />;
       case 'Milestone': return <HiOutlineSparkles />;
       case 'Community': return <HiOutlineUserGroup />;
       default: return <HiOutlineStar />;

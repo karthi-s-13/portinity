@@ -45,15 +45,13 @@ export default function AiResumeSection() {
   const [syncing, setSyncing] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [downloadingPdf, setDownloadingPdf] = useState(false);
-  const [viewMode, setViewMode] = useState('preview'); // 'preview' | 'code'
   const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   // Resume data state
   const [latexCode, setLatexCode] = useState('');
   const [structuredData, setStructuredData] = useState(null);
 
-  const [syncResult, setSyncResult] = useState(null);
-  const [copied, setCopied] = useState(false);
+
 
   // Resume history states
   const [historyList, setHistoryList] = useState([]);
@@ -89,7 +87,6 @@ export default function AiResumeSection() {
     localStorage.setItem('portinity_last_latex_code', item.latex_code);
     localStorage.setItem('portinity_last_resume_json', JSON.stringify(item.resume_json));
     
-    setViewMode('preview');
     setActiveStep('review');
     toast(`Loaded resume for ${item.target_role || 'Target Role'}`, 'success');
   };
@@ -188,7 +185,6 @@ export default function AiResumeSection() {
         localStorage.setItem('portinity_last_resume_json', JSON.stringify(data));
       }
 
-      setViewMode('preview');
       setActiveStep('review');
       toast('Tailored ATS Resume generated successfully!', 'success');
       fetchHistory(); // Refresh history list
@@ -199,23 +195,7 @@ export default function AiResumeSection() {
     }
   };
 
-  const handleCopyCode = () => {
-    navigator.clipboard.writeText(latexCode);
-    setCopied(true);
-    toast('LaTeX code copied to clipboard!', 'success');
-    setTimeout(() => setCopied(false), 2000);
-  };
 
-  const handleDownloadTex = () => {
-    const blob = new Blob([latexCode], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `Tailored_Resume_${targetRole.replace(/\s+/g, '_')}.tex`;
-    link.click();
-    URL.revokeObjectURL(url);
-    toast('Downloaded .tex file!', 'success');
-  };
 
   const handleDownloadPdf = async () => {
     if (!resumePdfRef.current) {
@@ -267,34 +247,6 @@ export default function AiResumeSection() {
           >
             <span className="ai-step-badge">3</span> Review & Download
           </button>
-        </div>
-
-        {/* ATS Score Badge (Top Right) */}
-        <div className="ai-v2-ats-badge-container">
-          <div className="ai-v2-ats-pill">
-            <HiShieldCheck className="ai-ats-icon" />
-            <span className="ai-ats-title">ATS Score</span>
-          </div>
-
-          <div className="ai-ats-ring-box">
-            <svg width="34" height="34" viewBox="0 0 36 36" className="ai-ats-svg">
-              <path
-                className="ai-ats-circle-bg"
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <path
-                className="ai-ats-circle-val"
-                strokeDasharray="92, 100"
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-            </svg>
-            <span className="ai-ats-number">92<small>/100</small></span>
-          </div>
-
-          <div className="ai-ats-text-group">
-            <div className="ai-ats-status">Excellent</div>
-            <div className="ai-ats-subtext">Great match for the job!</div>
-          </div>
         </div>
       </div>
 
@@ -504,54 +456,14 @@ export default function AiResumeSection() {
 
         {/* ================= COLUMN 3: RIGHT RESUME PREVIEW & ACTIONS ================= */}
         <div className="ai-v2-card ai-v2-preview-card">
-          <div className="ai-v2-preview-topbar">
-            <h2 className="ai-v2-preview-title">Resume Preview</h2>
-
-            <div className="ai-v2-preview-actions">
-              {/* View mode tab buttons */}
-              <div className="ai-v2-preview-tabs">
-                <button
-                  className={`ai-v2-tab ${viewMode === 'preview' ? 'active' : ''}`}
-                  onClick={() => setViewMode('preview')}
-                >
-                  <HiEye /> Preview
-                </button>
-                <button
-                  className={`ai-v2-tab ${viewMode === 'code' ? 'active' : ''}`}
-                  onClick={() => setViewMode('code')}
-                >
-                  <HiCodeBracket /> Source
-                </button>
-              </div>
-
-              {/* Action buttons based on view mode */}
-              {viewMode === 'code' ? (
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <button 
-                    className="ai-v2-download-pdf-btn"
-                    onClick={handleCopyCode}
-                    style={{ backgroundColor: '#475569' }}
-                  >
-                    <HiClipboardDocument /> Copy Code
-                  </button>
-                  <button 
-                    className="ai-v2-download-pdf-btn"
-                    onClick={handleDownloadTex}
-                  >
-                    <HiDocumentArrowDown /> Download .tex
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  className="ai-v2-download-pdf-btn"
-                  onClick={handleDownloadPdf}
-                  disabled={downloadingPdf || !structuredData}
-                >
-                  <HiPrinter /> Download PDF
-                </button>
-              )}
-            </div>
-          </div>
+              <button 
+                className="ai-v2-download-pdf-btn"
+                onClick={handleDownloadPdf}
+                disabled={downloadingPdf || !structuredData}
+                title="Export the preview shown below as PDF"
+              >
+                <HiPrinter /> Download PDF
+              </button>
 
           {/* PREVIEW CONTAINER VIEW */}
           <div className="ai-v2-paper-viewport">
@@ -562,19 +474,13 @@ export default function AiResumeSection() {
                 <p>pgvector cosine similarity search + Nemotron LLM execution</p>
               </div>
             ) : structuredData ? (
-              viewMode === 'code' ? (
-                <div className="ai-v2-code-viewport">
-                  <pre><code>{latexCode}</code></pre>
-                </div>
-              ) : (
-                <div className="ai-v2-paper-scroll">
-                  <ResumeRenderer 
-                    templateId={selectedTemplateId} 
-                    data={structuredData} 
-                    containerRef={resumePdfRef} 
-                  />
-                </div>
-              )
+              <div className="ai-v2-paper-scroll">
+                <ResumeRenderer 
+                  templateId={selectedTemplateId} 
+                  data={structuredData} 
+                  containerRef={resumePdfRef} 
+                />
+              </div>
             ) : (
               <div className="ai-v2-empty-state">
                 <HiSparkles className="ai-v2-empty-icon" />

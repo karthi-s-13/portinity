@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000/api' : '/api'),
   headers: {
     'Content-Type': 'application/json',
   },
@@ -23,9 +23,11 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const isAuthRoute = error.config?.url?.includes('/auth/login') || error.config?.url?.includes('/auth/register');
+    if (error.response?.status === 401 && !isAuthRoute) {
       localStorage.removeItem('portinity_token');
       localStorage.removeItem('portinity_user');
+      localStorage.removeItem('activeSection');
       window.location.href = '/login';
     }
     return Promise.reject(error);
