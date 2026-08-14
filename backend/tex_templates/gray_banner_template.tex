@@ -1,0 +1,204 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+
+% Clean, Consistent Page Margins
+\geometry{left=0.5in, top=0.5in, right=0.5in, bottom=0.5in}
+
+% Modern Executive Sans-Serif Font (TeX Gyre Heros / Helvetica)
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Letter spacing support for the subtitle/headline banner
+\usepackage[letterspace=150]{microtype}
+\newcommand{\letterspace}[1]{\textls{#1}}
+
+\pagestyle{empty}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% --- COLOR PALETTE ---
+\definecolor{execgray}{HTML}{27272A}    % Slate Dark Charcoal
+\definecolor{subbar}{HTML}{F4F4F5}      % Crisp Off-White/Gray
+\definecolor{charcoal}{HTML}{18181B}    % Primary Dark Text
+\definecolor{graytext}{HTML}{52525B}    % Secondary Subtitle Text
+\definecolor{lighttext}{HTML}{F4F4F5}   % Light Banner Text
+
+% --- SECTION HEADING FORMATTING (Full Width Charcoal Banner) ---
+\titleformat{\section}
+  {\vspace{4pt}\color{white}\bfseries\scshape\small}
+  {}{0em}
+  {\setlength{\fboxsep}{4pt}\colorbox{execgray}{\makebox[\dimexpr\textwidth-2\fboxsep\relax][l]}}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\begin{document}
+\color{charcoal}
+
+% ================= HEADER BANNER =================
+\noindent
+\setlength{\fboxsep}{10pt}%
+\colorbox{execgray}{ %
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}
+    \centering
+    {\Huge \scshape \textbf{\color{white} {{ name | latex }} }} \\[3pt]
+    {\small \color{lighttext} \scshape \letterspace{ {{ headline | latex }} } }
+  \end{minipage}%
+}
+
+\vspace{-1.5pt} % Seamless join between banners
+
+% ================= CONTACT SUB-BAR =================
+\noindent
+\setlength{\fboxsep}{5pt}%
+\colorbox{subbar}{ %
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}
+    \centering
+    \footnotesize \color{charcoal}
+    {% if phone %}\raisebox{-0.35ex}{\faPhone*} \ {{ phone | latex }} \quad $\cdot$ \quad {% endif %}
+    \raisebox{-0.35ex}{\faEnvelope} \ \href{mailto:{{ email }} }{\color{charcoal}{{ email | latex }}}
+    {% if location %} \quad $\cdot$ \quad \raisebox{-0.35ex}{\faMapMarker*} \ {{ location | latex }} {% endif %}
+    {% if linkedin %} \quad $\cdot$ \quad \raisebox{-0.35ex}{\faLinkedin} \ \href{ {{ linkedin }} }{\color{charcoal}{{ linkedin | latex }}} {% endif %}
+    {% if github %} \quad $\cdot$ \quad \raisebox{-0.35ex}{\faGithub} \ \href{ {{ github }} }{\color{charcoal}{{ github | latex }}}{% endif %}
+  \end{minipage}%
+}
+
+\vspace{6pt}
+
+% ================= PROFESSIONAL SUMMARY =================
+{% if summary %}
+\section{\faUser \ \ Professional Summary}
+\vspace{1pt}
+\small
+{{ summary | latex }}
+\vspace{2pt}
+{% endif %}
+
+% ================= WORK EXPERIENCE =================
+{% if experience %}
+\section{\faBriefcase \ \ Experience}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=6pt, topsep=2pt]
+    {% for exp in experience %}
+    \item
+      \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+        \textbf{\color{execgray} {{ (exp.role if exp is mapping else exp) | latex }} } & \small\color{graytext} {{ (exp.dates if exp is mapping else '') | latex }} \\
+        \textit{\small {{ (exp.company if exp is mapping else '') | latex }} } & \small\color{graytext} {{ (exp.location if exp is mapping else '') | latex }} \\
+      \end{tabular*}\vspace{-4pt}
+      \begin{itemize}[leftmargin=0.18in, label={$\cdot$}, itemsep=1.5pt, topsep=2pt]
+        {% if exp is mapping and exp.bullets %}
+          {% if exp.bullets is string %}
+            \item \small {{ exp.bullets | latex }}
+          {% elif exp.bullets is iterable %}
+            {% for bullet in exp.bullets %}
+            \item \small {{ bullet | latex }}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      \end{itemize}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+% ================= PROJECTS =================
+{% if projects %}
+\section{\faCode \ \ Projects}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=6pt, topsep=2pt]
+    {% for proj in projects %}
+    \item
+      \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+        \textbf{\color{execgray} {{ (proj.title if proj is mapping else proj) | latex }} } & \small\color{graytext} {{ (proj.dates if proj is mapping else '') | latex }} \\
+      \end{tabular*}\vspace{-4pt}
+      {% if proj is mapping and proj.tech_stack %}
+        \vspace{1pt}\small\color{graytext}\textbf{Tech Stack: } {{ proj.tech_stack | latex }}\vspace{2pt}
+      {% endif %}
+      \begin{itemize}[leftmargin=0.18in, label={$\cdot$}, itemsep=1.5pt, topsep=2pt]
+        {% if proj is mapping and proj.bullets %}
+          {% if proj.bullets is string %}
+            \item \small {{ proj.bullets | latex }}
+          {% elif proj.bullets is iterable %}
+            {% for bullet in proj.bullets %}
+            \item \small {{ bullet | latex }}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      \end{itemize}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+\vspace{2pt}
+
+% ================= BOTTOM SECTIONS (2-COLUMN SPLIT) =================
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+  % --- TECHNICAL SKILLS ---
+  {% if skills %}
+  \section{\faMicrochip \ \ Technical Skills}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=2.5pt, topsep=2pt]
+    \small{
+      {% if skills is mapping %}
+        {% for category, items in skills.items() %}
+          {% if items %}
+          \item \textbf{ {{ category | latex }}: } {{ items | latex }}
+          {% endif %}
+        {% endfor %}
+      {% elif skills is iterable and skills is not string %}
+        \item \textbf{Core Skills:} {{ skills | latex }}
+      {% else %}
+        \item {{ skills | latex }}
+      {% endif %}
+    }
+  \end{itemize}
+  \vspace{2pt}
+  {% endif %}
+
+  % --- CERTIFICATIONS ---
+  {% if certifications %}
+  \section{\faCertificate \ \ Certifications}
+    \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+      {% for cert in certifications %}
+      \item \small {% if cert is mapping %}\textbf{ {{ (cert.title or cert.name or 'Certification') | latex }} } --- {{ (cert.issuer or '') | latex }} {% if cert.dates %}({{ cert.dates }}){% endif %}{% else %}{{ cert | latex }}{% endif %}
+      {% endfor %}
+    \end{itemize}
+  {% endif %}
+  
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  % --- EDUCATION ---
+  {% if education %}
+  \section{\faGraduationCap \ \ Education}
+    \begin{itemize}[leftmargin=0in, label={}, itemsep=4pt, topsep=2pt]
+      {% for edu in education %}
+      \item
+        \begin{tabular*}{\linewidth}{l@{\extracolsep{\fill}}r}
+          \textbf{\small {{ (edu.institution if edu is mapping else edu) | latex }} } & \small\color{graytext} {{ (edu.dates if edu is mapping else '') | latex }} \\
+          \textit{\small {{ (edu.degree if edu is mapping else '') | latex }} } & \small\color{graytext} {{ (edu.location if edu is mapping else '') | latex }} \\
+        \end{tabular*}
+        {% if edu is mapping and edu.marks %}
+          \vspace{1pt}\small\color{graytext} {{ edu.marks | latex }}
+        {% endif %}
+      {% endfor %}
+    \end{itemize}
+  \vspace{2pt}
+  {% endif %}
+
+  % --- ACHIEVEMENTS ---
+  {% if achievements %}
+  \section{\faTrophy \ \ Achievements}
+    \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+      {% for ach in achievements %}
+      \item \small {% if ach is mapping %}\textbf{ {{ (ach.title or 'Achievement') | latex }}: } {{ (ach.description or ach.details or '') | latex }}{% else %}{{ ach | latex }}{% endif %}
+      {% endfor %}
+    \end{itemize}
+  {% endif %}
+
+\end{minipage}
+
+\end{document}

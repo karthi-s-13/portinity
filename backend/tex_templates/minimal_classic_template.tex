@@ -1,0 +1,164 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+
+% Margins (0.6 in for standard balanced proportion)
+\geometry{left=0.6in, top=0.6in, right=0.6in, bottom=0.6in}
+
+% Classic Serif Typography
+\usepackage{lmodern}
+
+\pagestyle{empty}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Minimal Classic Section Headings (Small Caps, Uppercase, Solid Line)
+\titleformat{\section}{
+  \vspace{-3pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\vspace{1.5pt}\titlerule\vspace{-3pt}]
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+\begin{document}
+
+% --- HEADER (Centered, Classic Style) ---
+\begin{center}
+    {\Huge \scshape \textbf{ {{ name | latex }} }} \\ \vspace{3pt}
+    {\large {{ headline | latex }} } \\ \vspace{5pt}
+    \small
+    \raisebox{-0.35ex}{\faEnvelope} \ \href{mailto:{{ email }} }{\color{black}{{ email | latex }}}
+    {% if phone %} \quad \cdot \quad \raisebox{-0.35ex}{\faPhone*} \ {{ phone | latex }} {% endif %}
+    {% if location %} \quad \cdot \quad \raisebox{-0.35ex}{\faMapMarker*} \ {{ location | latex }} {% endif %}
+    {% if linkedin or github %}
+    \\ \vspace{3pt}
+    {% if linkedin %}\raisebox{-0.35ex}{\faLinkedin} \ \href{ {{ linkedin }} }{\color{black}{{ linkedin | latex }}}{% endif %}
+    {% if github %}{% if linkedin %} \quad \cdot \quad {% endif %}\raisebox{-0.35ex}{\faGithub} \ \href{ {{ github }} }{\color{black}{{ github | latex }}}{% endif %}
+    {% endif %}
+\end{center}
+
+\vspace{-12pt}
+
+% --- PROFESSIONAL SUMMARY ---
+{% if summary %}
+\section{Professional Summary}
+\small
+{{ summary | latex }}
+\vspace{2pt}
+{% endif %}
+
+% --- WORK EXPERIENCE ---
+{% if experience %}
+\section{Experience}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=8pt, topsep=2pt]
+    {% for exp in experience %}
+    \item
+      \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+        \textbf{ {{ (exp.role if exp is mapping else exp) | latex }} } & {{ (exp.dates if exp is mapping else '') | latex }} \\
+        \textit{ {{ (exp.company if exp is mapping else '') | latex }} } & \small {{ (exp.location if exp is mapping else '') | latex }} \\
+      \end{tabular*}\vspace{-4pt}
+      \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+        {% if exp is mapping and exp.bullets %}
+          {% if exp.bullets is string %}
+            \item \small {{ exp.bullets | latex }}
+          {% elif exp.bullets is iterable %}
+            {% for bullet in exp.bullets %}
+            \item \small {{ bullet | latex }}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      \end{itemize}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+% --- PROJECTS ---
+{% if projects %}
+\section{Projects}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=8pt, topsep=2pt]
+    {% for proj in projects %}
+    \item
+      \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+        \textbf{ {{ (proj.title if proj is mapping else proj) | latex }} } & {{ (proj.dates if proj is mapping else '') | latex }} \\
+      \end{tabular*}\vspace{-4pt}
+      {% if proj is mapping and proj.tech_stack %}
+        \vspace{1pt}\small\textit{Technologies: } {{ proj.tech_stack | latex }}\vspace{2pt}
+      {% endif %}
+      \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+        {% if proj is mapping and proj.bullets %}
+          {% if proj.bullets is string %}
+            \item \small {{ proj.bullets | latex }}
+          {% elif proj.bullets is iterable %}
+            {% for bullet in proj.bullets %}
+            \item \small {{ bullet | latex }}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      \end{itemize}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+% --- TECHNICAL SKILLS ---
+{% if skills %}
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0in, label={}, itemsep=2pt, topsep=2pt]
+  \small{
+    {% if skills is mapping %}
+      {% for category, items in skills.items() %}
+        {% if items %}
+        \item \textbf{ {{ category | latex }}:} {{ items | latex }}
+        {% endif %}
+      {% endfor %}
+    {% elif skills is iterable and skills is not string %}
+      \item \textbf{Core Skills:} {{ skills | latex }}
+    {% else %}
+      \item {{ skills | latex }}
+    {% endif %}
+  }
+\end{itemize}
+{% endif %}
+
+% --- EDUCATION ---
+{% if education %}
+\section{Education}
+  \begin{itemize}[leftmargin=0in, label={}, itemsep=4pt, topsep=2pt]
+    {% for edu in education %}
+    \item
+      \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+        \textbf{ {{ (edu.institution if edu is mapping else edu) | latex }} } & {{ (edu.dates if edu is mapping else '') | latex }} \\
+        \textit{ {{ (edu.degree if edu is mapping else '') | latex }} } & \small {{ (edu.location if edu is mapping else '') | latex }} \\
+      \end{tabular*}
+      {% if edu is mapping and edu.marks %}
+        \vspace{1pt}\small {{ edu.marks | latex }}
+      {% endif %}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+% --- CERTIFICATIONS ---
+{% if certifications %}
+\section{Certifications}
+  \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+    {% for cert in certifications %}
+    \item \small {% if cert is mapping %}\textbf{ {{ (cert.title or cert.name or 'Certification') | latex }} } --- {{ (cert.issuer or '') | latex }} {% if cert.dates %}({{ cert.dates }}){% endif %}{% else %}{{ cert | latex }}{% endif %}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+% --- ACHIEVEMENTS ---
+{% if achievements %}
+\section{Achievements}
+  \begin{itemize}[leftmargin=0.15in, label={$\cdot$}, itemsep=2pt, topsep=2pt]
+    {% for ach in achievements %}
+    \item \small {% if ach is mapping %}\textbf{ {{ (ach.title or 'Achievement') | latex }}: } {{ (ach.description or ach.details or '') | latex }}{% else %}{{ ach | latex }}{% endif %}
+    {% endfor %}
+  \end{itemize}
+{% endif %}
+
+\end{document}

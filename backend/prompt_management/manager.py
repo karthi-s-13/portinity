@@ -41,9 +41,25 @@ def get_latex_template(template_id: str = "blue-line") -> str:
         fallback_path = os.path.join(os.path.dirname(BASE_DIR), "tex_templates", "resume_template.tex")
         if os.path.exists(fallback_path):
             path = fallback_path
+
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
             
-    with open(path, "r", encoding="utf-8") as f:
-        return f.read()
+    # Minimal fallback template string if tex file is missing
+    return r"""
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{utf8}
+\usepackage[margin=0.5in]{geometry}
+\begin{document}
+\centerline{\Huge \textbf{{{ name | latex }}}}
+\centerline{{{ headline | latex }}}
+\centerline{{{ email | latex }} | {{ phone | latex }} | {{ location | latex }}}
+\hrulefill
+\section*{Summary}
+{{ summary | latex }}
+\end{document}
+"""
 
 def escape_latex(val: Any) -> str:
     """Safely escape special LaTeX control characters recursively to prevent build failures."""
